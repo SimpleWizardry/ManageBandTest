@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="nav-bar">
-      <h1>Телеметрия</h1>
+      <h1><router-link to="/">Телеметрия</router-link></h1>
       <div>
         <md-button
           class="md-raised md-primary"
@@ -9,7 +9,6 @@
           @click.native="log"
 
         >
-    <!--      v-on:click="log()"-->
           Список контроллеров
         </md-button>
 
@@ -36,13 +35,8 @@
     },
     methods: {
       log() {
-        console.log('test')
-        console.log(this)
-        // store.commit('increment')
-        //this.$store.dispatch('SAVE_LIST', this.response)
         this.$store.commit('SET_LIST', this.response)
       }
-
     }
   }
 </script>
