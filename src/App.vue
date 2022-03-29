@@ -39,7 +39,8 @@
         console.log('test')
         console.log(this)
         // store.commit('increment')
-        this.$store.dispatch('SAVE_LIST', this.response)
+        //this.$store.dispatch('SAVE_LIST', this.response)
+        this.$store.commit('SET_LIST', this.response)
       }
 
     }

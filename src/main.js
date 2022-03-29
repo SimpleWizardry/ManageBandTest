@@ -9,18 +9,23 @@ import {store} from './store';
 
 //console.log(store)
 
-import { MdButton, MdContent, MdTabs, MdMenu } from 'vue-material/dist/components'
-
+//import { MdButton, MdContent, MdTabs, MdMenu, MdTable, MdCard} from 'vue-material/dist/components'
+import VueMaterial from 'vue-material'
 
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 
 Vue.config.productionTip = false
 
-Vue.use(MdButton)
-Vue.use(MdContent)
-Vue.use(MdTabs)
-Vue.use(MdMenu)
+// Vue.use(MdButton)
+// Vue.use(MdContent)
+// Vue.use(MdTabs)
+// Vue.use(MdMenu)
+// Vue.use(MdTable)
+// Vue.use(MdCard)
+// Vue.use(MdTableRow)
+
+Vue.use(VueMaterial)
 
 Vue.use(Vuex);
 
