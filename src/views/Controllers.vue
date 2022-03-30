@@ -47,9 +47,6 @@
       this.loading = true
     },
     beforeMount() {
-      // setTimeout(() => {
-      //   this.controllers = this.$store.getters.LIST
-      // }, 0)
       this.controllers = this.$store.getters.LIST
       this.loading = false
     },

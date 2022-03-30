@@ -29,7 +29,6 @@
     },
     methods: {
       saveSettings() {
-        console.log('save')
         this.$store.commit('SET_OPTIONS', this.options)
       }
     }

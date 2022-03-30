@@ -66,8 +66,6 @@
       };
     },
     beforeMount() {
-      //console.log(this.start, this.end)
-
       function pad(s){ return ('00' + s).slice(-2)}
       let length = []
       let start = new Date(this.start)
