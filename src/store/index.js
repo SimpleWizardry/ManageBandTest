@@ -7,6 +7,7 @@ export const store = new Vuex.Store({
   state: {
     list: null,
     currentItem: "",
+    options: null,
   },
   getters: {
     LIST: state => {
@@ -14,6 +15,9 @@ export const store = new Vuex.Store({
     },
     ITEM: state => {
       return state.currentItem;
+    },
+    OPTIONS: state => {
+      return state.options;
     }
   },
   mutations: {
@@ -22,11 +26,9 @@ export const store = new Vuex.Store({
     },
     SET_ITEM: (state, payload) => {
       state.currentItem = payload;
+    },
+    SET_OPTIONS: (state, payload) => {
+      state.options = payload;
     }
   },
-  // actions: {
-  //   SAVE_LIST: ({commit}) => {
-  //     commit('SET_LIST')
-  //   }
-  // },
 });

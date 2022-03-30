@@ -25,17 +25,19 @@
         :chartData="chartData"
         :start="new Date(fromDate)"
         :end="new Date(toDate)"
+        :current-option="this.option"
         :key="rerender"
       />
     </div>
     <div class="params">
       <md-button
         class="md-raised"
-        v-for="(option, index) in options"
+        v-for="(opt, index) in options"
         :key="index"
-        @click="setOption(option)"
+        @click="setOption(opt)"
+        v-bind:class="{ active: opt === option }"
       >
-        {{option}}
+        {{opt}}
       </md-button>
     </div>
   </div>
@@ -52,20 +54,13 @@
       toDate(newDate, oldDate) {
         if (oldDate && newDate && oldDate.getDate() !== newDate.getDate()) {
           this.filterChartData()
-          //this.rerender = !this.rerender
         }
       },
       fromDate(newDate, oldDate) {
         if (oldDate && newDate && oldDate.getDate() !== newDate.getDate()) {
           this.filterChartData()
-          //this.rerender = !this.rerender
         }
       },
-      // chartData(newData, oldData) {
-      //   if (newData.length !== oldData.length) {
-      //     this.rerender = !this.rerender
-      //   }
-      // }
     },
     data () {
       return {
@@ -85,20 +80,16 @@
         }
       }
     },
-    mounted() {
+    beforeMount() {
       this.$material.locale.dateFormat = "dd/MM/yyyy"
       this.toDate = new Date()
       let date = new Date()
       this.fromDate = new Date(date.setDate(date.getDate() - 1))
       this.controllerImei = this.$store.getters.ITEM
       this.controllers = this.$store.getters.LIST.filter(c => c.Imei === this.controllerImei)
-      //this.options = Object.keys(this.controllers[0])
-      let obj = this.controllers[0]
-      for (let key in obj) {
-        if ((obj[key] == null || typeof obj[key] === 'number') && !key.toUpperCase().includes('id'.toUpperCase())) {
-          this.options.push(key)
-        }
-      }
+      this.options = this.$store.getters.OPTIONS.filter(o => o.show).map(o => o.value)
+      this.option = this.options[0]
+      console.log(this.options)
     },
     methods: {
       filterChartData() {
@@ -106,7 +97,6 @@
           let date = new Date(c.Time)
           return (this.fromDate < date) && (date < this.toDate)
         })
-        // this.chartData = this.chartData.map(c => c[this.option])
         this.chartData = this.chartData.map(c => {
           return {
             value: c[this.option] ? c[this.option] : 0,
@@ -122,22 +112,17 @@
           }
         })
         this.rerender = !this.rerender
-        console.log(this.controllers, this.option, this.chartData)
       },
       setOption(option) {
         this.option = option
+        console.log(this.option, option)
         this.filterChartData()
-         console.log(this.option)
       }
     }
   }
 </script>
 
 <style scoped>
-  .container {
-    display: flex;
-    height: 94vh;
-  }
   .chart {
     width: 80%;
   }
@@ -152,5 +137,8 @@
   .date {
     margin-left: 5vw;
     width: 40%;
+  }
+  .active {
+    background: aqua !important;
   }
 </style>

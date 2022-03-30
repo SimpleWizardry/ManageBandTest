@@ -7,7 +7,6 @@ import App from './App'
 import router from './router'
 import {store} from './store';
 
-//console.log(store)
 
 //import { MdButton, MdContent, MdTabs, MdMenu, MdTable, MdCard} from 'vue-material/dist/components'
 import VueMaterial from 'vue-material'

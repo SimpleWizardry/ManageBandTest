@@ -8,7 +8,7 @@
         TruckId
       </div>
     </div>
-    <div class="scroll-panel">
+    <div class="scroll-panel" v-if="!loading">
       <div
         v-for="(controller, index) in controllers"
         class="controller-wrapper"
@@ -28,12 +28,9 @@
         </div>
       </div>
     </div>
-
-    <!--    <md-table v-model="controllers"  md-card md-fixed-header>-->
-    <!--      <md-table-row v-slot="controller">-->
-    <!--        <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ controller.Id }}</md-table-cell>-->
-    <!--      </md-table-row>-->
-    <!--    </md-table>-->
+    <div v-else style="display: flex; justify-content: center; align-items: center; height: 80vh">
+      <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
+    </div>
   </div>
 </template>
 
@@ -42,11 +39,19 @@
     name: 'HelloWorld',
     data() {
       return {
-        controllers: []
+        controllers: [],
+        loading: true
       }
     },
-    mounted() {
+    beforeCreate() {
+      this.loading = true
+    },
+    beforeMount() {
+      // setTimeout(() => {
+      //   this.controllers = this.$store.getters.LIST
+      // }, 0)
       this.controllers = this.$store.getters.LIST
+      this.loading = false
     },
     methods: {
       setItem(controller) {
@@ -89,12 +94,11 @@
     flex-grow: 1;
     height: 50px;
     display: flex;
-  //border-right: 1px solid gray;
     justify-content: center;
     align-items: center;
   }
 
   .odd {
-    background: aliceblue;
+    background: #e7e7e7;
   }
 </style>
