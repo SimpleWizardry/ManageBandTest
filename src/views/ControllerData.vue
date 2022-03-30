@@ -29,7 +29,14 @@
       />
     </div>
     <div class="params">
-
+      <md-button
+        class="md-raised"
+        v-for="(option, index) in options"
+        :key="index"
+        @click="setOption(option)"
+      >
+        {{option}}
+      </md-button>
     </div>
   </div>
 </template>
@@ -45,13 +52,13 @@
       toDate(newDate, oldDate) {
         if (oldDate && newDate && oldDate.getDate() !== newDate.getDate()) {
           this.filterChartData()
-          this.rerender = !this.rerender
+          //this.rerender = !this.rerender
         }
       },
       fromDate(newDate, oldDate) {
         if (oldDate && newDate && oldDate.getDate() !== newDate.getDate()) {
           this.filterChartData()
-          this.rerender = !this.rerender
+          //this.rerender = !this.rerender
         }
       },
       // chartData(newData, oldData) {
@@ -67,6 +74,7 @@
         fromDate: null,
         toDate: null,
         chartData: [],
+        options: [],
         option: "Height",
         rerender: true,
         maxDate: date => {
@@ -84,6 +92,13 @@
       this.fromDate = new Date(date.setDate(date.getDate() - 1))
       this.controllerImei = this.$store.getters.ITEM
       this.controllers = this.$store.getters.LIST.filter(c => c.Imei === this.controllerImei)
+      //this.options = Object.keys(this.controllers[0])
+      let obj = this.controllers[0]
+      for (let key in obj) {
+        if ((obj[key] == null || typeof obj[key] === 'number') && !key.toUpperCase().includes('id'.toUpperCase())) {
+          this.options.push(key)
+        }
+      }
     },
     methods: {
       filterChartData() {
@@ -92,7 +107,12 @@
           return (this.fromDate < date) && (date < this.toDate)
         })
         // this.chartData = this.chartData.map(c => c[this.option])
-        this.chartData = this.chartData.map(c => {return { value: c[this.option], name: c.Time }})
+        this.chartData = this.chartData.map(c => {
+          return {
+            value: c[this.option] ? c[this.option] : 0,
+            name: c.Time
+          }
+        })
         this.chartData = this.chartData.sort((a, b) => {
           if (a.Time < b.Time) {
             return -1;
@@ -101,9 +121,14 @@
             return 1;
           }
         })
-        console.log(this.controllers, this.controllerImei, this.toDate, this.fromDate, this.chartData)
+        this.rerender = !this.rerender
+        console.log(this.controllers, this.option, this.chartData)
+      },
+      setOption(option) {
+        this.option = option
+        this.filterChartData()
+         console.log(this.option)
       }
-
     }
   }
 </script>
@@ -117,8 +142,9 @@
     width: 80%;
   }
   .params {
-    background: yellow;
+    background: #9f9f9f;;
     width: 20%;
+    border-radius: 10px;
   }
   .filter {
     display: flex;

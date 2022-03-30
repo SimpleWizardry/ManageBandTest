@@ -49,7 +49,7 @@
           },
           xAxis: {
             type: 'category',
-            data: ['A', 'B', 'C']
+            data: []
           },
           yAxis: {
             type: 'value'
